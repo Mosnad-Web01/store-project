@@ -1,5 +1,8 @@
 /* Write your custom CSS here ONLY if necessary */
-
+*{
+padding: 0;
+margin: 0;
+}
 .cart {
   margin-left: 20px;
   font-size: 40px;
