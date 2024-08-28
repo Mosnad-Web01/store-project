@@ -37,6 +37,7 @@
   width: 150px;
   height: 150px;
   position: relative;
+  transition: transform 0.2s;
 }
 
 .card-img-top:hover {
@@ -60,4 +61,24 @@
   .col-sm-4 {
     width: 100%;
   }
+}
+
+.col-12 {
+  width: 70%;
+  margin: 0 auto;
+  height: 68vh;
+}
+
+.col-12 h1 {
+  text-align: center;
+}
+
+.col-12 img {
+  margin: 0 auto;
+}
+
+.col-12 p {
+  text-align: center;
+  width: 500px;
+  margin: 0 auto;
 }

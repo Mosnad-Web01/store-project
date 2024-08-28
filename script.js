@@ -145,11 +145,30 @@ const renderProducts = (products) => {
 };
 
 // You'll need to play with this function in order to add features and enhance the style.
+// const renderProduct = (product) => {
+//   navBar();
+//   CONTAINER.innerHTML = `
+//   <div class="row">
+//   ${product.title}
+//   </div>`;
+//   renderFooter();
+// };
+
 const renderProduct = (product) => {
-  CONTAINER.innerHTML = `
-      <div class="row">
-          ${product.title}
-      </div>`;
+  CONTAINER.innerHTML = ""; // Clear existing content
+  navBar(); // Add navbar again
+  const productDetailsDiv = document.createElement("div");
+  productDetailsDiv.className = "row";
+  productDetailsDiv.innerHTML = `
+    <div class="col-12">
+      <h1>${product.title}</h1>
+      <img src="${product.image}" alt="${product.title}" class="img-fluid card-img-top">
+      <p>${product.description}</p>
+      <p>Price: $${product.price}</p>
+    </div>
+  `;
+  CONTAINER.appendChild(productDetailsDiv);
+  renderFooter(); // Add footer
 };
 
 // Function to render the footer
