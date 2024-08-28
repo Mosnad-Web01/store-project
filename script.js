@@ -50,8 +50,6 @@ const autorun = async () => {
   renderFooter(); // Render the footer after products
 };
 
-
-
 // Don't touch this function please
 const constructUrl = (path) => {
   return `${STORE_BASE_URL}/${path}`;
@@ -73,23 +71,39 @@ const fetchProducts = async () => {
   return res.json();
 };
 const filterProducts = (category, products) => {
-  if (category === 'all') {
+  if (category === "all") {
     return products;
   }
-  return products.filter(product => product.category === category);
+  return products.filter((product) => product.category === category);
 };
 
 // Function to handle filtering setup
+// const setupCategoryFilters = (products) => {
+//   const categoryLinks = document.querySelectorAll("[data-category]");
+
+//   categoryLinks.forEach((link) => {
+//     link.addEventListener("click", (event) => {
+//       event.preventDefault();
+//       const category = event.target.getAttribute("data-category");
+//       const filteredProducts = filterProducts(category, products);
+//       CONTAINER.innerHTML = ""; // Clear existing content
+//       navBar();
+//       renderProducts(filteredProducts); // Render filtered products
+//       renderFooter(); // Re-add footer after rendering
+//       setupCategoryFilters();
+//     });
+//   });
+// };
 const setupCategoryFilters = (products) => {
-  const categoryLinks = document.querySelectorAll('[data-category]');
-  
-  categoryLinks.forEach(link => {
-    link.addEventListener('click', (event) => {
+  const categoryLinks = document.querySelectorAll("[data-category]");
+  categoryLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
       event.preventDefault();
-      const category = event.target.getAttribute('data-category');
+      const category = event.target.getAttribute("data-category");
       const filteredProducts = filterProducts(category, products);
-      CONTAINER.innerHTML = ''; // Clear existing content
-      navBar();
+      CONTAINER.innerHTML = ""; // Clear existing content
+      navBar(); // Add navbar again
+      setupCategoryFilters(products); // Reattach the event listeners
       renderProducts(filteredProducts); // Render filtered products
       renderFooter(); // Re-add footer after rendering
     });
