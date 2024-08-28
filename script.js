@@ -1,7 +1,7 @@
 "use strict";
 
 const STORE_BASE_URL = "https://fakestoreapi.com";
-const CONTAINER = document.querySelector(".container");
+const CONTAINER = document.querySelector(".container-fluid");
 
 // Navbar Function
 const navBar = () => {
@@ -21,11 +21,11 @@ const navBar = () => {
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" id="all">All</a></li>
-              <li><a class="dropdown-item" href="#" id="electronics">Electronics</a></li>
-              <li><a class="dropdown-item" href="#" id="jewelery">Jewelery</a></li>
-              <li><a class="dropdown-item" href="#" id="men">Men's clothing</a></li>
-              <li><a class="dropdown-item" href="#" id="women">Women's clothing</a></li>
+              <li><a class="dropdown-item" href="#" data-category="all">All</a></li>
+              <li><a class="dropdown-item" href="#" data-category="electronics">Electronics</a></li>
+              <li><a class="dropdown-item" href="#" data-category="jewelery">Jewelery</a></li>
+              <li><a class="dropdown-item" href="#" data-category="men's clothing">Men's clothing</a></li>
+              <li><a class="dropdown-item" href="#" data-category="women's clothing">Women's clothing</a></li>
             </ul>
           </li>
         </ul>
@@ -44,9 +44,13 @@ const navBar = () => {
 // Don't touch this function please
 const autorun = async () => {
   const products = await fetchProducts();
+  navBar();
+  setupCategoryFilters(products); // Set up filters with fetched products
   renderProducts(products);
   renderFooter(); // Render the footer after products
 };
+
+
 
 // Don't touch this function please
 const constructUrl = (path) => {
@@ -67,6 +71,28 @@ const fetchProducts = async () => {
   const url = constructUrl(`products`);
   const res = await fetch(url);
   return res.json();
+};
+const filterProducts = (category, products) => {
+  if (category === 'all') {
+    return products;
+  }
+  return products.filter(product => product.category === category);
+};
+
+// Function to handle filtering setup
+const setupCategoryFilters = (products) => {
+  const categoryLinks = document.querySelectorAll('[data-category]');
+  
+  categoryLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const category = event.target.getAttribute('data-category');
+      const filteredProducts = filterProducts(category, products);
+      CONTAINER.innerHTML = ''; // Clear existing content
+      renderProducts(filteredProducts); // Render filtered products
+      renderFooter(); // Re-add footer after rendering
+    });
+  });
 };
 
 // You may need to add to this function, definitely don't delete it.
@@ -147,7 +173,6 @@ const renderFooter = () => {
 
   CONTAINER.appendChild(footer);
 };
-navBar();
 
 // Initial call to add navbar
 // navBar
