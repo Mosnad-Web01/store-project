@@ -37,18 +37,34 @@ const productDetails = async (product) => {
 };
 
 // You'll need to play with this function in order to add features and enhance the style.
+
 const renderProducts = (products) => {
+  const productRow = document.createElement('div'); // Create a row container
+  productRow.className = 'row'; // Assign Bootstrap row class
+
   products.map((product) => {
-    const productDiv = document.createElement("div");
+    const productDiv = document.createElement('div');
+    productDiv.className = 'col-sm-4'; // Assign Bootstrap column class
     productDiv.innerHTML = `
-          <img src="${product.image}" alt="${product.title} poster">
-          <h3>${product.title}</h3>`;
-    productDiv.addEventListener("click", () => {
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <img class="card-img-top" src="${product.image}" alt="${product.title} poster">
+          <h3 class="card-title">${product.title}</h3>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>`;
+
+    productDiv.addEventListener('click', () => {
       productDetails(product);
     });
-    CONTAINER.appendChild(productDiv);
+
+    productRow.appendChild(productDiv); // Append product to the row
   });
+
+  CONTAINER.appendChild(productRow); // Append the entire row to the container
 };
+
+
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderProduct = (product) => {
@@ -98,3 +114,5 @@ const navBar = () => {
 
 navBar();
 // navBar
+
+
