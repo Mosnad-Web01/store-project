@@ -37,7 +37,6 @@ const navBar = () => {
       </div>
     </div>
   </nav>`;
-
   CONTAINER.appendChild(navDiv);
 };
 
@@ -77,23 +76,6 @@ const filterProducts = (category, products) => {
   return products.filter((product) => product.category === category);
 };
 
-// Function to handle filtering setup
-// const setupCategoryFilters = (products) => {
-//   const categoryLinks = document.querySelectorAll("[data-category]");
-
-//   categoryLinks.forEach((link) => {
-//     link.addEventListener("click", (event) => {
-//       event.preventDefault();
-//       const category = event.target.getAttribute("data-category");
-//       const filteredProducts = filterProducts(category, products);
-//       CONTAINER.innerHTML = ""; // Clear existing content
-//       navBar();
-//       renderProducts(filteredProducts); // Render filtered products
-//       renderFooter(); // Re-add footer after rendering
-//       setupCategoryFilters();
-//     });
-//   });
-// };
 const setupCategoryFilters = (products) => {
   const categoryLinks = document.querySelectorAll("[data-category]");
   categoryLinks.forEach((link) => {
@@ -119,14 +101,19 @@ const productDetails = async (product) => {
 // You'll need to play with this function in order to add features and enhance the style.
 
 const renderProducts = (products) => {
-  const productRow = document.createElement("div"); // Create a row container
-  productRow.className = "row"; // Assign Bootstrap row class
+  const productRow = document.createElement("div");
+  productRow.className = "row";
+
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  let cartCount = JSON.parse(localStorage.getItem("cartCount")) || 0;
 
   products.map((product) => {
     const productDiv = document.createElement("div");
-    productDiv.className = "col-sm-4"; // Assign Bootstrap column class
+    productDiv.className = "col-sm-4";
+
     productDiv.innerHTML = `
       <div class="card" style="width: 18rem;">
+        <i class="bi bi-heart" data-id="${product.id}"></i>
         <div class="card-body">
           <img class="card-img-top" src="${product.image}" alt="${product.title} poster">
           <h3 class="card-title">${product.title}</h3>
@@ -136,23 +123,38 @@ const renderProducts = (products) => {
 
     productDiv.addEventListener("click", () => {
       productDetails(product);
+
+      // Increment cart count and update local storage
+      cartCount += 1;
+      localStorage.setItem("cartCount", JSON.stringify(cartCount));
+      updateCartCount();
     });
 
-    productRow.appendChild(productDiv); // Append product to the row
+    const heartIcon = productDiv.querySelector(".bi-heart");
+
+    if (favorites.includes(product.id)) {
+      heartIcon.classList.replace("bi-heart", "bi-heart-fill");
+    }
+
+    heartIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      if (!favorites.includes(product.id)) {
+        favorites.push(product.id);
+        heartIcon.classList.replace("bi-heart", "bi-heart-fill");
+      } else {
+        favorites = favorites.filter((id) => id !== product.id);
+        heartIcon.classList.replace("bi-heart-fill", "bi-heart");
+      }
+
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    });
+
+    productRow.appendChild(productDiv);
   });
 
-  CONTAINER.appendChild(productRow); // Append the entire row to the container
+  CONTAINER.appendChild(productRow);
 };
-
-// You'll need to play with this function in order to add features and enhance the style.
-// const renderProduct = (product) => {
-//   navBar();
-//   CONTAINER.innerHTML = `
-//   <div class="row">
-//   ${product.title}
-//   </div>`;
-//   renderFooter();
-// };
 
 const renderProduct = (product) => {
   CONTAINER.innerHTML = ""; // Clear existing content

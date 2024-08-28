@@ -8,6 +8,7 @@
 }
 
 .card {
+  position: relative;
   margin: auto;
   border-radius: 15px;
   cursor: pointer;
@@ -81,4 +82,19 @@
   text-align: center;
   width: 500px;
   margin: 0 auto;
+}
+
+.bi-heart {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+}
+
+.bi-heart-fill {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  color: red;
 }
