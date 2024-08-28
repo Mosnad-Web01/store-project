@@ -1,1 +1,8 @@
 /* Write your custom CSS here ONLY if necessary */
+
+.cart {
+  margin-left: 20px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #3a4895;
+}

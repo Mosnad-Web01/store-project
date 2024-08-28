@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const STORE_BASE_URL = 'https://fakestoreapi.com';
-const CONTAINER = document.querySelector('.container');
+const STORE_BASE_URL = "https://fakestoreapi.com";
+const CONTAINER = document.querySelector(".container");
 
 // Don't touch this function please
 const autorun = async () => {
@@ -14,16 +14,18 @@ const constructUrl = (path) => {
   return `${STORE_BASE_URL}/${path}`;
 };
 
-// This function is to fetch products. You may need to add it or change some part in it in order to apply some of the features.
-const fetchProducts = async () => {
-  const url = constructUrl(`products`);
+// Don't touch this function please. This function is to fetch one product.
+const fetchProduct = async (productId) => {
+  const url = constructUrl(`products/${productId}`);
   const res = await fetch(url);
   return res.json();
 };
 
-// Don't touch this function please. This function is to fetch one product.
-const fetchProduct = async (productId) => {
-  const url = constructUrl(`products/${productId}`);
+///////////////////////////////////////////
+
+// This function is to fetch products. You may need to add it or change some part in it in order to apply some of the features.
+const fetchProducts = async () => {
+  const url = constructUrl(`products`);
   const res = await fetch(url);
   return res.json();
 };
@@ -37,11 +39,11 @@ const productDetails = async (product) => {
 // You'll need to play with this function in order to add features and enhance the style.
 const renderProducts = (products) => {
   products.map((product) => {
-    const productDiv = document.createElement('div');
+    const productDiv = document.createElement("div");
     productDiv.innerHTML = `
           <img src="${product.image}" alt="${product.title} poster">
           <h3>${product.title}</h3>`;
-    productDiv.addEventListener('click', () => {
+    productDiv.addEventListener("click", () => {
       productDetails(product);
     });
     CONTAINER.appendChild(productDiv);
@@ -56,4 +58,43 @@ const renderProduct = (product) => {
       </div>`;
 };
 
-document.addEventListener('DOMContentLoaded', autorun);
+document.addEventListener("DOMContentLoaded", autorun);
+////////////
+const navBar = () => {
+  CONTAINER.innerHTML = `
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Fake Store</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" id="all">All</a></li>
+            <li><a class="dropdown-item" href="#" id="electronics">Electronics</a></li>
+            <li><a class="dropdown-item" href="#" id="jewelery">Jewelery</a></li>
+            <li><a class="dropdown-item" href="#" id="men">Men's clothing</a></li>
+            <li><a class="dropdown-item" href="#" id="women">Women's clothing</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <a class="cart" href="/card"><i class="bi bi-cart3"></i></a>
+    </div>
+  </div>
+</nav>`;
+};
+
+navBar();
+// navBar
