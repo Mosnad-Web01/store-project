@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 const STORE_BASE_URL = "https://fakestoreapi.com";
 const CONTAINER = document.querySelector(".container");
 
 // Navbar Function
 const navBar = () => {
-  const navDiv = document.createElement('div');
+  const navDiv = document.createElement("div");
   navDiv.innerHTML = `
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
@@ -37,7 +37,7 @@ const navBar = () => {
       </div>
     </div>
   </nav>`;
-  
+
   CONTAINER.appendChild(navDiv);
 };
 
@@ -78,22 +78,22 @@ const productDetails = async (product) => {
 // You'll need to play with this function in order to add features and enhance the style.
 
 const renderProducts = (products) => {
-  const productRow = document.createElement('div'); // Create a row container
-  productRow.className = 'row'; // Assign Bootstrap row class
+  const productRow = document.createElement("div"); // Create a row container
+  productRow.className = "row"; // Assign Bootstrap row class
 
   products.map((product) => {
-    const productDiv = document.createElement('div');
-    productDiv.className = 'col-sm-4'; // Assign Bootstrap column class
+    const productDiv = document.createElement("div");
+    productDiv.className = "col-sm-4"; // Assign Bootstrap column class
     productDiv.innerHTML = `
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <img class="card-img-top" src="${product.image}" alt="${product.title} poster">
           <h3 class="card-title">${product.title}</h3>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <p>${product.price}</p>
         </div>
       </div>`;
 
-    productDiv.addEventListener('click', () => {
+    productDiv.addEventListener("click", () => {
       productDetails(product);
     });
 
@@ -113,8 +113,8 @@ const renderProduct = (product) => {
 
 // Function to render the footer
 const renderFooter = () => {
-  const footer = document.createElement('footer');
-  footer.className = 'bg-dark text-white text-center py-3';
+  const footer = document.createElement("footer");
+  footer.className = "bg-dark text-white text-center py-3";
 
   footer.innerHTML = `
   <section class="">
@@ -147,8 +147,9 @@ const renderFooter = () => {
 
   CONTAINER.appendChild(footer);
 };
+navBar();
 
 // Initial call to add navbar
-navBar();
+// navBar
 
 document.addEventListener("DOMContentLoaded", autorun);
