@@ -89,6 +89,7 @@ const setupCategoryFilters = (products) => {
       const category = event.target.getAttribute('data-category');
       const filteredProducts = filterProducts(category, products);
       CONTAINER.innerHTML = ''; // Clear existing content
+      navBar();
       renderProducts(filteredProducts); // Render filtered products
       renderFooter(); // Re-add footer after rendering
     });
